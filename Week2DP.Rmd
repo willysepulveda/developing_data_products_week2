@@ -1,0 +1,22 @@
+---
+title: "R Markdown and Leaflet"
+author: "Willy Sepulveda"
+date: "Feb 27, 2019"
+output: html_document
+---
+
+## R Markdown
+
+In the map you can find information about a clustering process to find patterns in the geographical distribution of the population
+
+```{r include = FALSE}
+library(leaflet)
+library(dplyr)
+mapadat <- read.csv("mapadat.csv")
+```
+
+```{r}
+factpal <- colorFactor(c('blue','purple', 'green','red'), mapadat$Cluster)
+leaflet(mapadat) %>% addTiles() %>% addCircleMarkers(~Longitud, ~Latitud,color = ~factpal(Cluster), radius = 4)%>% addLegend("bottomright", pal = factpal, values = ~Cluster,title = "Clusters",opacity = 1)
+```
+
